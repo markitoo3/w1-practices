@@ -1,54 +1,23 @@
-/* const data = [
-    "Gergely Kiss",
-    "Krisztián Bui",
-    "Buczkó Balázs",
-    "András Varga",
-    "Borbála Teréz Kovács"
-];
- */
 
-const data = [
-    {
-        name: "Gergely Kiss",
-        favouriteFood: "Csirke/Rizs"
-    },
-    {
-        name: "András Varga",
-        favouriteFood: "Brassói"
-    },
-    {
-        name: "Buczkó Balázs",
-        favouriteFood: "Kolbászos rájás pizza"
-    },
-    {
-        name: "Krisztián Bui",
-        favouriteFood: "Banán"
-    },
-    {
-        name: "Borbála Teréz Kovács",
-        favouriteFood: "Avokádó"
-    },
-    {
-        name: "Benett Viszokai",
-        favouriteFood: "Alma"
-    },
-    {
-        name: "Krisztián Pörneczi",
-        favouriteFood: "Almáspite"
-    },
-]
-function loadEvent() {
+
+async function loadEvent() {
     console.log("Az oldal betöltődött");
 
     const root = document.querySelector("#root")
+    
+    const countryRes = await fetch("https://restcountries.com/v3.1/all");
+    const countryArr = await countryRes.json();
 
-    for (const frontendStudent of data) {
+    //console.log(countryArr[0].name.official)
+
+    for (const country of countryArr) {
+        //console.log(country.name.common);
         root.insertAdjacentHTML("beforeend", `
             <section>
-                <h1>${frontendStudent.name}</h1>
-                <p>${frontendStudent.favouriteFood}</p>
-            </section> 
+                <h1>${country.name.common}</h1>
+                <p>${country.region}</p>
+            </section>
         `)
-    }
+}
 }
 window.addEventListener("load", loadEvent);
